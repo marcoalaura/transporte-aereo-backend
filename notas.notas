@@ -1,0 +1,225 @@
+# Integracion con ciudadania
+
+## Registro del sistema cliente
+
+Ref: https://gitlab.geo.gob.bo/rgarcia/documentacion-ciudadania/blob/master/ESPECIFICACION.md#registro-del-sistema-cliente
+
+Se hace petición POST a https://cuenta.ciudadaniadigital.agetic.gob.bo/reg
+o a de pruebas: https://account-idetest.agetic.gob.bo/reg/
+
+
+campos necesarios:
+
+#### redirect_uris
+
+["https://test.agetic.gob.bo/transporte/oauth"]
+
+#### post_logout_redirect_uris
+
+["https://test.agetic.gob.bo/transporte/oauth_logout"]
+
+#### client_name
+
+plataforma-transporte-aereo-test
+
+#### token_endpoint_auth_method
+
+client_secret_basic
+
+#### authorization_params
+
+##### scope
+
+openid profile nombre documento_identidad fecha_nacimiento email celular
+
+##### redirect_uris_signature
+
+solamente de pruebas
+
+["https://test.agetic.gob.bo/transporte/ciudadania/firma0"]
+
+#### authorization token
+
+solamente de pruebas
+
+> const jwt = require('jsonwebtoken')
+undefined
+> token = jwt.sign({ user: 'test.aereo.agetic.gob.bo', servicio: 'plataforma transporte aereo test'}, '5995eddecc66c8164a4c6f0e07af229be34076f548c1fcb8885641876adc6173')
+'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGVzdC5hZXJlby5hZ2V0aWMuZ29iLmJvIiwic2VydmljaW8iOiJwbGF0YWZvcm1hIHRyYW5zcG9ydGUgYWVyZW8gdGVzdCIsImlhdCI6MTU0MDUwMzM5NX0.FnoLaIl6ApTnffVH_6YbQvlPY3UWY1D44l00E2u6BMY'
+
+la clave viene de `echo -e "transporte-aereo-test" | sha1sum | sha256sum`
+
+#### grant_types
+
+["authorization_code"]
+
+#### response_types
+
+["code"]
+
+#### application_type
+
+web
+
+#### contacts (de prueba)
+
+["rgarcia@agetic.gob.bo"]
+
+### Petición de registro
+```
+curl -X POST \
+  https://account-idetest.agetic.gob.bo/reg/ \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -H 'postman-token: 64727ddd-7c89-0225-fddf-53f198ee9a7c' \
+  -d '{
+	"redirect_uris": ["https://test.agetic.gob.bo/transporte/oauth"],
+	"post_logout_redirect_uris": ["https://test.agetic.gob.bo/transporte/oauth_logout"],
+    "client_name": "plataforma-transporte-aereo-test",
+    "logo_uri": "https://test.agetic.gob.bo/static/favicon/airplane-32-202276.png",
+    "token_endpoint_auth_method": "client_secret_basic",
+    "authorization_params": {
+          "scope": "openid nombre documento_identidad fecha_nacimiento email",
+          "redirect_uris_signature": null,
+          "authorization_token": null
+	},
+	"grant_types": ["authorization_code"],
+	"response_types": ["code"],
+	"application_type": "web",
+	"contacts": ["rgarcia@agetic.gob.bo"]
+}'
+```
+
+### Respuesta del registro
+
+```
+{
+    "application_type": "web",
+    "grant_types": [
+        "authorization_code"
+    ],
+    "id_token_signed_response_alg": "RS256",
+    "require_auth_time": false,
+    "response_types": [
+        "code"
+    ],
+    "subject_type": "public",
+    "token_endpoint_auth_method": "client_secret_basic",
+    "introspection_signed_response_alg": "RS256",
+    "post_logout_redirect_uris": [
+        "https://test.agetic.gob.bo/transporte/oauth_logout"
+    ],
+    "backchannel_logout_session_required": false,
+    "frontchannel_logout_session_required": false,
+    "authorization_signed_response_alg": "RS256",
+    "web_message_uris": [],
+    "client_id_issued_at": 1540827719,
+    "client_id": "c2c03cdc-cdb1-4c89-9ddd-4d5d1e5bd8ba",
+    "client_name": "plataforma-transporte-aereo-test",
+    "client_secret_expires_at": 0,
+    "client_secret": "a5AkY4VE7IAnl7wYI8ZsVP+eAbVySikD1JiIW4BZJzuuWxbW4t+8Q3qgEGpMCD1Z",
+    "contacts": [
+        "rgarcia@agetic.gob.bo"
+    ],
+    "logo_uri": "https://test.agetic.gob.bo/static/favicon/airplane-32-202276.png",
+    "redirect_uris": [
+        "https://test.agetic.gob.bo/transporte/oauth"
+    ],
+    "introspection_endpoint_auth_method": "client_secret_basic",
+    "revocation_endpoint_auth_method": "client_secret_basic",
+    "registration_client_uri": "https://account-idetest.agetic.gob.bo/reg/c2c03cdc-cdb1-4c89-9ddd-4d5d1e5bd8ba",
+    "registration_access_token": "9ILtar_RDwU5bT7IHX~oI3MSyhdJ5brUSPjoa0RWiDt"
+}
+```
+
+```
+{
+    "application_type": "web",
+    "grant_types": [
+        "authorization_code"
+    ],
+    "id_token_signed_response_alg": "RS256",
+    "require_auth_time": true,
+    "response_types": [
+        "code"
+    ],
+    "subject_type": "public",
+    "token_endpoint_auth_method": "client_secret_basic",
+    "introspection_signed_response_alg": "RS256",
+    "post_logout_redirect_uris": [
+        "https://test.agetic.gob.bo/transporte/oauth_logout"
+    ],
+    "backchannel_logout_session_required": false,
+    "frontchannel_logout_session_required": false,
+    "authorization_signed_response_alg": "RS256",
+    "web_message_uris": [],
+    "client_id_issued_at": 1540828643,
+    "client_id": "66781709-41c6-4c78-a551-a8d7880a0ca3",
+    "client_name": "plataforma-transporte-aereo-test",
+    "client_secret_expires_at": 0,
+    "client_secret": "KqbywyzzgrfuxRjOyKpXarBGjY8fJd6EQhLDlTLjVtzL5Fu9U9M5JGDV9tapZiNI",
+    "contacts": [
+        "rgarcia@agetic.gob.bo"
+    ],
+    "logo_uri": "https://test.agetic.gob.bo/static/favicon/airplane-32-202276.png",
+    "redirect_uris": [
+        "https://test.agetic.gob.bo/transporte/oauth"
+    ],
+    "introspection_endpoint_auth_method": "client_secret_basic",
+    "revocation_endpoint_auth_method": "client_secret_basic",
+    "registration_client_uri": "https://account-idetest.agetic.gob.bo/reg/66781709-41c6-4c78-a551-a8d7880a0ca3",
+    "registration_access_token": "D3nPplduqUnCpXigKXOlRQ~WSKNpN8vdNC8LxfrYN4x"
+}
+```
+
+#### Respuesta de registro *con que funciona*
+
+Este registro lo hizo Reynaldo (averiguar por que no funcionó cuando lo mande yo)
+```
+{
+    "application_type": "web",
+    "grant_types": [
+        "authorization_code"
+    ],
+    "id_token_signed_response_alg": "RS256",
+    "require_auth_time": true,
+    "response_types": [
+        "code"
+    ],
+    "subject_type": "public",
+    "token_endpoint_auth_method": "client_secret_basic",
+    "introspection_signed_response_alg": "RS256",
+    "post_logout_redirect_uris": [
+        "https://test.agetic.gob.bo/transporte/oauth_logout"
+    ],
+    "backchannel_logout_session_required": false,
+    "frontchannel_logout_session_required": false,
+    "authorization_signed_response_alg": "RS256",
+    "web_message_uris": [],
+    "client_id_issued_at": 1540828643,
+    "client_id": "66781709-41c6-4c78-a551-a8d7880a0ca3",
+    "client_name": "plataforma-transporte-aereo-test",
+    "client_secret_expires_at": 0,
+    "client_secret": "KqbywyzzgrfuxRjOyKpXarBGjY8fJd6EQhLDlTLjVtzL5Fu9U9M5JGDV9tapZiNI",
+    "contacts": [
+        "rgarcia@agetic.gob.bo"
+    ],
+    "logo_uri": "https://test.agetic.gob.bo/static/favicon/airplane-32-202276.png",
+    "redirect_uris": [
+        "https://test.agetic.gob.bo/transporte/oauth"
+    ],
+    "introspection_endpoint_auth_method": "client_secret_basic",
+    "revocation_endpoint_auth_method": "client_secret_basic",
+    "registration_client_uri": "https://account-idetest.agetic.gob.bo/reg/66781709-41c6-4c78-a551-a8d7880a0ca3",
+    "registration_access_token": "D3nPplduqUnCpXigKXOlRQ~WSKNpN8vdNC8LxfrYN4x"
+}
+```
+
+## Datos del test (máquinas)
+
+ProxyPass /transporte-proxy http://172.29.0.74/transporte-proxy
+ProxyPassReverse /transporte-proxy http://172.29.0.74/transporte-proxy
+ProxyPass /transporte-backend http://172.29.0.74/transporte-backend
+ProxyPassReverse /transporte-backend http://172.29.0.74/transporte-backend
+ProxyPass /transporte http://172.29.0.74/transporte
+ProxyPassReverse /transporte http://172.29.0.74/transporte

@@ -1,0 +1,47 @@
+'use strict';
+
+const openid = {
+  // issuer server openid connect
+  issuer: 'https://account-idetest.agetic.gob.bo',
+  // response registry client
+  client: {
+    'application_type': 'web',
+    'grant_types': [
+      'authorization_code'
+    ],
+    'id_token_signed_response_alg': 'RS256',
+    'require_auth_time': true,
+    'response_types': [
+      'code'
+    ],
+    'subject_type': 'public',
+    'token_endpoint_auth_method': 'client_secret_basic',
+    'post_logout_redirect_uris': [
+      'https://localhost:3100/transporte/oauth_logout'
+    ],
+    'backchannel_logout_session_required': false,
+    'client_id_issued_at': 1530657893,
+    'client_id': '7703197d-bb81-49a3-b5a1-666be03b6e6d',
+    'client_name': 'Sistema Único de viajes',
+    'client_secret_expires_at': 0,
+    'client_secret': 'IXVOoxHQKcPoXaV6cAVyv8XchqPcMhe+6BNU94Eej5/u74Y6Tka6XAbkwEnPb9S2',
+    'contacts': [
+      'contacto@contacto.com'
+    ],
+    'logo_uri': 'https://localhost:3100/transporte/logo',
+    'redirect_uris': [
+      'https://localhost:3100/transporte/oauth'
+    ],
+    'introspection_endpoint_auth_method': 'client_secret_basic',
+    'revocation_endpoint_auth_method': 'client_secret_basic',
+    'registration_client_uri': 'https://account-idetest.agetic.gob.bo/reg/7703197d-bb81-49a3-b5a1-666be03b6e6d',
+    'registration_access_token': 'MmY0YzQ1YzktMjFlYS00YzNmLWE4OGMtZjUxNGMyMDRmODM4Y3-KrExvyPtHxs0yn8XInlSfja2GNw6sPk6RO5ZxvF5rFH9PzeltyeopOqA5EJvgf0ZR63s9E_H-SfHhmhqVSA'
+  },
+  // parameters registry client
+  client_params: {
+    scope: ['openid profile nombre documento_identidad fecha_nacimiento email celular']
+    // prompt: 'consent',
+  }
+};
+
+module.exports = openid;

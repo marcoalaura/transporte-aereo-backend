@@ -1,0 +1,57 @@
+{
+  "id_operador": "1",
+  "fecha_inicio": "2018-01-01",
+  "fecha_fin": "2018-01-30",
+  "itinerarios": [
+    {
+      "eqv": "CP-1001",
+      "vlo": "100",
+      "ori": "LPB",
+      "des": "CBB",
+      "etd": "17:30",
+      "eta": "18:00",
+      "dia": "4",
+      "obs": "NINGUNA"
+    },
+    {
+      "eqv": "CP-1002",
+      "vlo": "100",
+      "ori": "LPB",
+      "des": "CBaB",
+      "etd": "17:30",
+      "eta": "8:00",
+      "dia": "4",
+      "obs": ""
+    },
+    {
+      "eqv": "CP-1003",
+      "vlo": "100",
+      "ori": "LPB",
+      "des": "CBB",
+      "etd": "10:30",
+      "eta": "18:00",
+      "dia": "4",
+      "obs": ""
+    },
+    {
+      "eqv": "CP-1004",
+      "vlo": "100",
+      "ori": "LPB",
+      "des": "CBB",
+      "etd": "7:30+1",
+      "eta": "23:00",
+      "dia": "1-2-",
+      "obs": ""
+    },
+    {
+      "eqv": "CP-8139",
+      "vlo": "OB1000",
+      "ori": "VV",
+      "des": "MAD",
+      "etd": "23:00",
+      "eta": "05:00+1",
+      "dia": "6-7",
+      "obs": "VUELO DE MARKETING"
+    }
+  ]
+}
